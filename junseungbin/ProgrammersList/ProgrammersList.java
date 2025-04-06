@@ -30,7 +30,8 @@ class Solution {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-
+        sc.close();
+            
         System.out.println("1.숫자열의 0번 인덱스부터 b번 인덱스까지");
         System.out.println("2.숫자열의 a번 인덱스부터 마지막 인덱스까지");
         System.out.println("3.숫자열의 a번 인덱스부터 b번 인덱스까지");
