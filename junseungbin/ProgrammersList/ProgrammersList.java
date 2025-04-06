@@ -1,81 +1,69 @@
 package assignment;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Scanner;
 
 class ProgrammersList {
+    public int[] solution(int n, int[] slicer, int[] num_list) {
+        int a = slicer[0];
+        int b = slicer[1];
+        int c = slicer[2];
+        int[] answer = {};
+
+        if (n == 1) {
+            answer = new int[b]; 
+            System.arraycopy(num_list, 0, answer, 0, b); 
+        } else if (n == 2) {
+            int length = num_list.length - (a - 1); 
+            answer = new int[length];
+            System.arraycopy(num_list, a - 1, answer, 0, length);
+        } else if (n == 3) {
+            int length = b - a+1;
+            answer = new int[length];
+            System.arraycopy(num_list, a-1, answer, 0, length);
+        } else if (n == 4) {
+            int length = ((b - a) / c + 1);
+            answer = new int[length];
+            for (int i = 0; i < length; i++) {
+                answer[i] = num_list[a + i * c - 1];
+            }
+        }
+
+        return answer;
+    }
+
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        System.out.println("1.숫자열의 0번 인덱스부터 b번 인덱스까지");
-        System.out.println("2.숫자열의 a번 인덱스부터 마지막 인덱스까지");
-        System.out.println("3.숫자열의 a번 인덱스부터 b번 인덱스까지");
-        System.out.println("4.숫자열의 0번 인덱스부터 b번 인덱스까지 c의 간격으로");
-        System.out.print("숫자 입력: ");
+        ProgrammersList solution = new ProgrammersList();
 
+        System.out.print("1.숫자열의 0번 인덱스부터 b번 인덱스까지");
+        System.out.print("\n2.숫자열의 a번 인덱스부터 마지막 인덱스까지");
+        System.out.print("\n3.숫자열의 a번 인덱스부터 b번 인덱스까지");
+        System.out.print("\n4.숫자열의 0번 인덱스부터 b번 인덱스까지 c의 간격으로");
+        System.out.print("\n번호 입력(1, 2, 3, 4): ");
         int n = sc.nextInt();
 
-        List<String> num_list = new ArrayList<String>();
-        System.out.print("\n전체 숫자의 갯수 입력: ");
-        int count = sc.nextInt();
-
-        List<String> slicer = new ArrayList<String>();
-        System.out.print("\n시작 인덱스 순서 입력(마지막 인덱스 순서 이하, 0개 이상): ");
-        int a = sc.nextInt();
-        System.out.print("\n마지막 인덱스 순서 입력(전체 갯수 이하, 시작 인덱스 순서 이상): ");
-        int b = sc.nextInt();
-        System.out.print("\n인덱스 간격 입력(1이상 3이하): ");
-        int c = sc.nextInt();
-
-
-        for(int i = 0 ; i < count ; i++){
-            System.out.print("숫자들 순서대로 입력: ");
-            num_list.add(sc.next());
+        System.out.print("시작인덱스, 마지막 인덱스, 출력 간격을 순서대로 입력(a, b, c): ");
+        int[] slicer = new int[3];
+        for (int i = 0; i < 3; i++) {
+            slicer[i] = sc.nextInt();
         }
 
-        if(n == 1) {
-            System.out.print("\n" + num_list + "에서 1번 인덱스부터 " + b + "번 인덱스까지 자른 리스트는 [");
-            for (int m = 0; m < b; m++) {
-                System.out.print(num_list.get(m));
-                if(m<b-1){
-                    System.out.print(", ");
-                }
+        System.out.print("숫자열의 크기와 요소들을 하나씩 순서대로 입력하세요: ");
+        int size = sc.nextInt();
+        int[] num_list = new int[size];
+        for (int i = 0; i < size; i++) {
+            num_list[i] = sc.nextInt();
+        }
+
+        int[] result = solution.solution(n, slicer, num_list);
+
+        System.out.print("결과: [");
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i]);
+            if (i < result.length - 1) {
+                System.out.print(", ");
             }
-            System.out.print("]입니다.");
         }
-
-        if(n == 2){
-            System.out.print("\n" + num_list + "에서 "+ a +"번 인덱스부터 마지막 인덱스까지 자른 리스트는 [");
-            for (int m = a-1; m < count; m++) {
-                System.out.print(num_list.get(m));
-                if(m<count-1){
-                    System.out.print(", ");
-                }
-            }
-            System.out.print("]입니다.");
-        }
-
-        if(n == 3){
-            System.out.print("\n" + num_list + "에서 "+ a +"번 인덱스부터 " + b + "번 인덱스까지 자른 리스트는 [");
-            for (int m = a-1; m < b; m++) {
-                System.out.print(num_list.get(m));
-                if(m<b-1){
-                    System.out.print(", ");
-                }
-            }
-            System.out.print("]입니다.");
-        }
-
-        if(n == 4){
-            System.out.print("\n" + num_list + "에서 " + a + "번 인덱스부터 " + b + "번 인덱스까지 " + c + "개 간격으로 자른 리스트는 [");
-            for (int m = a-1; m < b; m=m+c) {
-                System.out.print(num_list.get(m));
-                if(m<b-1){
-                    System.out.print(", ");
-                }
-            }
-            System.out.print("]입니다.");
-
-        }
+        System.out.println("]");
     }
 }
